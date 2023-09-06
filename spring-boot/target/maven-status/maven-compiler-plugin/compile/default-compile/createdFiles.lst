@@ -1,0 +1,7 @@
+com\javaspringboot\api\Application.class
+com\javaspringboot\entity\baseEntity.class
+com\javaspringboot\api\NewAPI.class
+com\javaspringboot\entity\RoleEntity.class
+com\javaspringboot\entity\CategoryEntity.class
+com\javaspringboot\entity\NewEntity.class
+com\javaspringboot\entity\UserEntity.class
