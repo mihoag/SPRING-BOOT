@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>User Registration</title>
+<style type="text/css">
+    label {
+        display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+    }
+    input[type=text], input[type=password], select {
+        display: inline-block;
+        width: 200px;
+    }
+    input[type=radio] {
+        margin-left: 45px;
+    }
+    input[type=checkbox] {
+        margin-right: 190px;
+    }  
+    button {
+        padding: 5px;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+<div align="center">
+    <div th:replace = "fragments :: header"></div>
+    <h1>List Users</h1>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+            <th>No.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Gender</th>
+                <th>Married</th>
+                <th>Birthday</th>
+            </tr>
+            <!-- 
+            status variable : 
+            + index : will show order number from 0,1,2.... 
+            + count : will show order number from 1,2.... 
+            + size
+            + current : 
+            + even : return true if the index is even otherwise return false
+            + odd : return true if the index is odd otherwise return false
+            + first : return true if the index is first otherwise return false
+            + lastreturn true if the index is last otherwise return false
+            
+             -->
+            
+            
+            <tr th:each = "user , iterStat: ${listUser}" th:class = "${iterStat.even == true ? 'text-primary' : 'text-success'}">
+            <th th:text = "${iterStat.count}">count</th>
+            <th th:text = "${user.name}">name</th>
+            <th th:text = "${user.email}">email</th>
+            <th th:text = "${user.password}">password</th>
+            <th th:text = "${user.gender}">gender</th>
+            <th th:text = "${user.married}">married</th>
+            <th th:text = "${user.birthday}">birthday</th>
+            </tr>
+        </thead>
+        
+   
+        
+    </table>
+    <br/><br/>
+    <div th:replace = "fragments::footer"></div>
+</div>
+</body>
+</html>
