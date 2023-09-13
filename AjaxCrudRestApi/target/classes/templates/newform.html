@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Create New Person</title>
+<script type="text/javascript" src="/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+</head>
+<body>
+	<div align="center">	
+		<h1>Create New Person</h1>
+		<br/>
+		<form action="#" th:object="${person}" id="formsubmit">
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>Name:</td>
+					<td><input type="text" th:field="*{name}" /></td>
+				</tr>
+				<tr>
+					<td>Province:</td>
+					 <td>
+                     <select th:field="*{add}">
+                      <option value="0" th:text="--------" />
+                      <option th:each="p : ${listProvince}" th:value="${p.id}" th:text="${p.provincename}" />
+                     </select>
+              
+                 </td>
+                 </tr>
+                <br/>
+                
+                <tr>
+					<td>District:</td>
+					 <td>
+                     <select th:field="*{dis}">
+          
+                     <option th:each="p : ${listDistrict}" th:value="${p.id}" th:text="${p.name}" />
+                     </select>
+                     </td>
+                </tr>
+               
+				<br/>
+					
+				<tr align="center">			
+					<td colspan="2"><button type="button" id="btn">Save</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<script type="text/javascript">
+
+
+	$("#add").change(
+     function()
+     {
+        addId = $("#add").val();
+        url = "[[@{'/api/'}]]" + addId + "/district";
+        $.get(url, function(responseJson)
+                {
+                 disDropdown = $("#dis");
+                 disDropdown.empty();
+                 $.each(responseJson, function(index, d)
+                 {
+                     $("<option>").val(d.id).text(d.name).appendTo(disDropdown);
+            
+                  }); 
+                 }).fail(function()
+            {
+            	alert("FAIL")
+            	        }
+                    );
+                 }
+			);
+	
+    $('#btn').click(function(e)
+    	    {
+    	 e.preventDefault();
+    	 var data = {};
+    	 var formData = $('#formsubmit').serializeArray();
+    	 $.each(formData, function (i, v) {
+    	        data[""+v.name+""] = v.value;
+    	 });
+    	 addNew(data);
+	    });
+    function addNew(data) {
+    	$.ajax({
+            url: '/api/user',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+            	window.location.href = "[[@{'/'}]]?message=success_system";
+            },
+            error: function (error) {
+            	window.location.href = "[[@{'/'}]]/?message=error_system";
+            	return false;
+            }
+        });
+    }
+	</script>
+</body>
+</html>
